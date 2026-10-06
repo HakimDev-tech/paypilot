@@ -1,2 +1,9 @@
-# paypilot
-AI agent that investigates and resolves PayPal payout exceptions through context-aware decisions, human approval, and automated recovery.
+# PayPilot
+
+AI agent for resolving PayPal payout exceptions.
+
+> Detect → Investigate → Decide → Approve → Act → Verify
+
+## Status
+
+🚧 In development
