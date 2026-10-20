@@ -1,0 +1,37 @@
+name: Quality checks
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main, "feat/**", "fix/**"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Typecheck, lint and production build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm install
+      - name: Payout policy tests
+        run: node --experimental-strip-types --experimental-default-type=module --test tests/*.test.mjs
+      - name: TypeScript check
+        run: npx tsc --noEmit
+      - name: ESLint
+        run: npm run lint
+      - name: Production build
+        run: npm run build
