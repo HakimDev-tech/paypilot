@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [main]
   push:
-    branches: [main, "feat/**"]
+    branches: [main, "feat/**", "fix/**"]
 
 permissions:
   contents: read
@@ -27,6 +27,8 @@ jobs:
           node-version: 22
       - name: Install dependencies
         run: npm install
+      - name: Payout policy tests
+        run: node --experimental-strip-types --experimental-default-type=module --test tests/*.test.mjs
       - name: TypeScript check
         run: npx tsc --noEmit
       - name: ESLint
